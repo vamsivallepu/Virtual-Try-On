@@ -1,16 +1,151 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Upload Images</title>
+	<title>Upload Images</title>
+	<style type="text/css">
+		body {
+			font-family: Arial, sans-serif;
+			margin: 0;
+			padding: 0;
+		}
+		
+		h1 {
+			text-align: center;
+		}
+		
+		form {
+			width: 50%;
+			margin: 0 auto;
+			border: 1px solid #ccc;
+			padding: 20px;
+			border-radius: 10px;
+		}
+		
+		.form-group {
+			margin-bottom: 20px;
+		}
+		
+		label {
+			display: block;
+			margin-bottom: 5px;
+			font-weight: bold;
+		}
+		
+		input[type="file"] {
+			display: block;
+			margin-top: 5px;
+			padding: 5px;
+			background-color: #fff;
+			color: #333;
+			border: 1px solid #ccc;
+			border-radius: 3px;
+			cursor: pointer;
+		}
+
+		input[type="file"]:hover,
+		input[type="file"]:focus {
+			outline: none;
+			border-color: #4CAF50;
+			box-shadow: 0px 0px 2px #4CAF50;
+		}
+		
+		.preview-image {
+			max-width: 500px;
+			max-height: 500px;
+		}
+		
+		.preview-delete {
+			margin-left: 10px;
+			padding: 5px 10px;
+			background-color: red;
+			color: #fff;
+			border: none;
+			border-radius: 3px;
+			cursor: pointer;
+		}
+		
+		.preview-delete:hover {
+			background-color: #ff6666;
+		}
+		
+		.preview-container {
+			margin-top: 10px; 
+			display: flex;
+			align-items: center;
+			justify-content: space-between;
+		}
+		
+		.preview-label {
+			width: 200px;
+			margin-right: 10px;
+		}
+
+		.submit-button {
+			padding: 10px 20px;
+			background-color: #4CAF50;
+			color: #fff;
+			border: none;
+			border-radius: 3px;
+			cursor: pointer;
+		}
+		
+		.submit-button:hover {
+			background-color: #3e8e41;
+		}
+
+		.submit-button {
+			margin-left: 10px;
+		}
+	</style>
+	
+	<script type="text/javascript">
+		function previewImage(input, previewID) {
+			if (input.files && input.files[0]) {
+				var reader = new FileReader();
+				
+				reader.onload = function (e) {
+					document.getElementById(previewID).setAttribute('src', e.target.result);
+				}
+				
+				reader.readAsDataURL(input.files[0]);
+				
+				// Show the preview image
+				document.getElementById(previewID + "-container").style.display = "flex";
+			}
+		}
+		
+		function deletePreview(previewID) {
+			document.getElementById(previewID).setAttribute('src', '');
+			document.getElementById(previewID + "-container").style.display = 'none';
+			document.getElementById(previewID + "-file").value = '';
+		}
+	</script>
 </head>
+
 <body>
-    <h1>Upload Images</h1>
-    <form action="/" method="post" enctype="multipart/form-data">
-        <p>Person image:</p>
-        <input type="file" name="person"><br><br>
-        <p>Cloth image:</p>
-        <input type="file" name="cloth"><br><br>
-        <input type="submit" value="Submit">
+	<h1>Upload Images</h1>
+	
+	<form action="/" method="post" enctype="multipart/form-data">
+		<div class="form-group">
+			<label for="person" class="preview-label">Person image:</label>
+			<input type="file" name="person" onchange="previewImage(this, 'person-preview')" id="person-file">
+			<div class="preview-container" id="person-preview-container" style="display:none">
+				<img id="person-preview" src="" alt="Preview" class="preview-image">
+				<button type="button" class="preview-delete" onclick="deletePreview('person-preview')">Remove</button>
+			</div>
+		</div>
+		
+		<div class="form-group">
+			<label for="cloth" class="preview-label">Cloth image:</label>
+			<input type="file" name="cloth" onchange="previewImage(this, 'cloth-preview')" id="cloth-file">
+			<div class="preview-container" id="cloth-preview-container" style="display:none">
+				<img id="cloth-preview" src="" alt="Preview" class="preview-image">
+				<button type="button" class="preview-delete" onclick="deletePreview('cloth-preview')">Remove</button>
+			</div>
+        </div>
+        <div class="form-group">
+            <input type="submit" value="Submit" class="submit-button">
+        </div>
     </form>
 </body>
 </html>

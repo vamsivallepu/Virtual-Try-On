@@ -43,7 +43,7 @@ def home():
             cv2.imwrite('static/result.jpg', result)
 
         # Display the output image on the website
-        return render_template('result.html', output_filename='result.jpg')
+        return render_template('result.html')
     else:
         return render_template('index.html')
 

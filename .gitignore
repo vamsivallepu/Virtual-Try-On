@@ -3,3 +3,4 @@ checkpoints/jpp.pb
 checkpoints/tom.pth
 __pycache__
 .ipynb_checkpoints
+.gcloudignore

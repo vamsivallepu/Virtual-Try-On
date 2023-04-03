@@ -21,7 +21,9 @@ def home():
     if request.method == 'POST':
         # Get the uploaded images
         person_image = request.files['person']
-        cloth_image = request.files['cloth']
+
+        cloth_image = Image.open(request.form['cloth'][22:])
+        print(type(person_image), type(cloth_image))
 
         # Save the uploaded images to the server
         person_filename = 'person.jpg'
@@ -40,6 +42,7 @@ def home():
             end = time.time()
             print("time:"+str(end-start))
             print("Confidence:"+str(trusts))
+            result=cv2.cvtColor(result, cv2.COLOR_RGB2BGR)
             cv2.imwrite('static/result.jpg', result)
 
         # Display the output image on the website

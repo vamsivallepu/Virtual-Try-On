@@ -1,151 +1,238 @@
 <!DOCTYPE html>
 <html>
-<head>
-	<title>Upload Images</title>
-	<style type="text/css">
-		body {
-			font-family: Arial, sans-serif;
-			margin: 0;
-			padding: 0;
-		}
-		
-		h1 {
-			text-align: center;
-		}
-		
-		form {
-			width: 50%;
-			margin: 0 auto;
-			border: 1px solid #ccc;
-			padding: 20px;
-			border-radius: 10px;
-		}
-		
-		.form-group {
-			margin-bottom: 20px;
-		}
-		
-		label {
-			display: block;
-			margin-bottom: 5px;
-			font-weight: bold;
-		}
-		
-		input[type="file"] {
-			display: block;
-			margin-top: 5px;
-			padding: 5px;
-			background-color: #fff;
-			color: #333;
-			border: 1px solid #ccc;
-			border-radius: 3px;
-			cursor: pointer;
-		}
+  <head>
+    <meta charset="UTF-8" />
+    <title>Virtual Dressing Room</title>
+    <style>
+      /* Add your CSS styles here */
+      body {
+        font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+        font-size: 16px;
+        line-height: 1.6;
+        color: #444444;
+      }
 
-		input[type="file"]:hover,
-		input[type="file"]:focus {
-			outline: none;
-			border-color: #4CAF50;
-			box-shadow: 0px 0px 2px #4CAF50;
-		}
-		
-		.preview-image {
-			max-width: 500px;
-			max-height: 500px;
-		}
-		
-		.preview-delete {
-			margin-left: 10px;
-			padding: 5px 10px;
-			background-color: red;
-			color: #fff;
-			border: none;
-			border-radius: 3px;
-			cursor: pointer;
-		}
-		
-		.preview-delete:hover {
-			background-color: #ff6666;
-		}
-		
-		.preview-container {
-			margin-top: 10px; 
-			display: flex;
-			align-items: center;
-			justify-content: space-between;
-		}
-		
-		.preview-label {
-			width: 200px;
-			margin-right: 10px;
-		}
+      h1 {
+        font-size: 36px;
+        font-weight: bold;
+        text-align: center;
+        margin-top: 40px;
+        margin-bottom: 20px;
+      }
 
-		.submit-button {
-			padding: 10px 20px;
-			background-color: #4CAF50;
-			color: #fff;
-			border: none;
-			border-radius: 3px;
-			cursor: pointer;
-		}
-		
-		.submit-button:hover {
-			background-color: #3e8e41;
-		}
+      form {
+        width: 100%;
+        max-width: 800px;
+        margin: 0 auto;
+        padding: 20px;
+        background-color: #EAD5E6;
+        border-radius: 5px;
+        box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+      }
 
-		.submit-button {
-			margin-left: 10px;
-		}
-	</style>
-	
-	<script type="text/javascript">
-		function previewImage(input, previewID) {
-			if (input.files && input.files[0]) {
-				var reader = new FileReader();
-				
-				reader.onload = function (e) {
-					document.getElementById(previewID).setAttribute('src', e.target.result);
-				}
-				
-				reader.readAsDataURL(input.files[0]);
-				
-				// Show the preview image
-				document.getElementById(previewID + "-container").style.display = "flex";
-			}
-		}
-		
-		function deletePreview(previewID) {
-			document.getElementById(previewID).setAttribute('src', '');
-			document.getElementById(previewID + "-container").style.display = 'none';
-			document.getElementById(previewID + "-file").value = '';
-		}
-	</script>
-</head>
+      label {
+        display: block;
+        margin-bottom: 10px;
+        font-weight: bold;
+      }
 
-<body>
-	<h1>Upload Images</h1>
-	
-	<form action="/" method="post" enctype="multipart/form-data">
-		<div class="form-group">
-			<label for="person" class="preview-label">Person image:</label>
-			<input type="file" name="person" onchange="previewImage(this, 'person-preview')" id="person-file">
-			<div class="preview-container" id="person-preview-container" style="display:none">
-				<img id="person-preview" src="" alt="Preview" class="preview-image">
-				<button type="button" class="preview-delete" onclick="deletePreview('person-preview')">Remove</button>
-			</div>
-		</div>
-		
-		<div class="form-group">
-			<label for="cloth" class="preview-label">Cloth image:</label>
-			<input type="file" name="cloth" onchange="previewImage(this, 'cloth-preview')" id="cloth-file">
-			<div class="preview-container" id="cloth-preview-container" style="display:none">
-				<img id="cloth-preview" src="" alt="Preview" class="preview-image">
-				<button type="button" class="preview-delete" onclick="deletePreview('cloth-preview')">Remove</button>
-			</div>
-        </div>
-        <div class="form-group">
-            <input type="submit" value="Submit" class="submit-button">
-        </div>
+      input[type="file"],
+      select {
+        display: block;
+        width: 100%;
+        padding: 10px;
+        margin-bottom: 20px;
+        border: 1px solid #cccccc;
+        border-radius: 5px;
+        background-color: #ffffff;
+        box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.1);
+        color: #444444;
+        font-size: 16px;
+        line-height: 1.4;
+        -webkit-appearance: none;
+        -moz-appearance: none;
+        appearance: none;
+      }
+
+      input[type="button"] {
+        display: block;
+        width: 100%;
+        padding: 10px;
+        margin-bottom: 20px;
+        border: none;
+        border-radius: 5px;
+        background-color: #00bfff;
+        color: #ffffff;
+        font-size: 16px;
+        font-weight: bold;
+        cursor: pointer;
+      }
+
+      body {
+        font-family: Arial, sans-serif;
+      }
+
+      h1 {
+        text-align: center;
+        margin-top: 10px;
+      }
+
+      .gallery {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
+        margin-top: 10px;
+      }
+
+      .gallery img {
+        display: block;
+        width: 200px;
+        height: 300px;
+        margin: 20px;
+        border-radius: 5px;
+        box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
+        cursor: pointer;
+        transition: transform 0.3s;
+      }
+
+      .gallery img:hover {
+        transform: scale(1.1);
+      }
+
+      #preview {
+        display: none;
+        width: 200px;
+        height: 300px;
+        margin-left: 200px;
+        margin-top: 20px;
+      }
+
+	  .background1 {
+		position: absolute;
+		top: 200px;
+		z-index: -1;
+	  }
+	  .background2{
+		position: absolute;
+		top: 200px;
+		z-index: -1;
+		left: 1100px;
+		height: 700px !important;
+	  }
+	  
+	  h4{
+		font-size: medium;
+	  }
+	 .rules {
+		color: red ;
+		font-style: italic;
+		font-size: small;
+	  }
+
+      .selected {
+        border: 2px solid red;
+      }
+	  h1{
+		color: #B47AEA;
+	  }
+	  #submit-button {
+        font-size: 16px;
+        padding: 10px;
+        background-color: #28a745;
+        color: #fff;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+        margin-top: 20px;
+      }
+
+      #submit-button:hover {
+        background-color: #218838;
+      }
+	  .input-labels{
+		color: #B47AEA;
+		font-size: 25px;
+	  }
+    </style>
+  </head>
+  <body>
+    <h1>Virtual Dressing Room</h1>
+	<div class="background1">
+		<img src="../static/back1.jpg" alt="">
+	</div>
+	<div class="background2">
+		<img src="../static/back2.jpg" alt="">
+	</div>
+    <form method="POST" action="/" enctype="multipart/form-data">
+	  <h4>Rules To Upload Picture</h4>
+	  <div class="rules">
+		1. Upload the picture with white background. </br>
+		2. Please upload the picture with good lighting. </br>
+		3. Upload the picture with good resolution.</br>
+		4. Make sure that the picture is of size 256x192. </br>
+	  </div><br />
+	  <label for="person_image" class="input-labels">UPLOAD YOUR IMAGE</label>
+      <input
+        type="file"
+        id="person_image"
+        name="person"
+        required
+        accept="image/*"
+        onchange="previewPersonImage(event)"
+      />
+      <img id="preview" src="#" alt="Preview" />
+      <label class="input-labels" >SELECT A CLOTH</label>
+      <div class="gallery">
+        <img src="../static/cloth1.jpg" alt="Cloth 1" onclick="selectCloth(event)" />
+        <img
+		  src="../static/cloth2.jpg"
+          alt="Cloth 2"
+          onclick="selectCloth(event)"
+        />
+        <img
+          src="../static/cloth3.jpg"
+          alt="Cloth 3"
+          onclick="selectCloth(event)"
+        />
+		<img
+          src="../static/cloth4.jpg"
+          alt="Cloth 3"
+          onclick="selectCloth(event)"
+        />
+		<img
+          src="../static/cloth5.jpg"
+          alt="Cloth 3"
+          onclick="selectCloth(event)"
+        />
+        <!-- Add more images here -->
+      </div>
+
+      <input id="cloth_image" type="text" name="cloth" value="" />
+      <input type="submit" id="submit-button" value="Submit" />
     </form>
-</body>
+
+    <script>
+      function previewPersonImage(event) {
+        var preview = document.getElementById("preview");
+        preview.style.display = "block";
+        preview.src = URL.createObjectURL(event.target.files[0]);
+      }
+
+      function selectCloth(event) {
+        var clothImageInput = document.getElementById("cloth_image");
+
+        clothImageInput.value = event.target.src;
+		console.log(clothImageInput.value)
+
+        var previouslySelected = document.querySelector(".selected");
+
+        if (previouslySelected) {
+          previouslySelected.classList.remove("selected");
+        }
+
+        // Add border to selected image
+        event.target.classList.add("selected");
+      }
+    </script>
+  </body>
 </html>

@@ -74,8 +74,7 @@ class Model(object):
         parse = np.array(parse[:, :, 0], dtype="uint8")
         (out, warp) = self.cpvton.predict(parse, pose_map, human_img, c_img)
 
-        out_img = np.array((np.transpose(out.detach().cpu().numpy()[
-                           0], axes=(1, 2, 0))+1)/2*255, dtype='uint8')
+        out_img = np.array((np.transpose(out.detach().cpu().numpy()[0], axes=(1, 2, 0))+1)/2*255, dtype='uint8')
 
         if keep_back:
             # keep arms & background

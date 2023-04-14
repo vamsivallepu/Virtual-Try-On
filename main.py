@@ -21,7 +21,6 @@ def home():
     if request.method == 'POST':
         # Get the uploaded images
         person_image = request.files['person']
-
         cloth_image = Image.open(request.form['cloth'][22:])
         print(type(person_image), type(cloth_image))
 
